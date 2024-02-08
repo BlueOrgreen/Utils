@@ -10,6 +10,25 @@ function isAsyncFunction <T, R extends Array<any>>(
     return callback instanceof AsyncFunction === true
 }
 
+
+/**
+ * @param {string} url 脚本地址
+ * @param {Function} callback 脚本加载完后执行的回调函数
+ */
+function loadScript(url: string, callback?: () => void) {
+    const script: HTMLScriptElement = document.createElement("script");
+    script.type = "text/javascript";
+
+    script.onload = function() {
+        callback && callback()
+    }
+
+    script.src = url;
+    document.getElementsByTagName("head")[0].appendChild(script);
+}
+
+
 export {
-    isAsyncFunction
+    isAsyncFunction,
+    loadScript
 }
